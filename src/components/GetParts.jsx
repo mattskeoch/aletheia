@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useSession } from "@clerk/nextjs";
+import supabaseClient from "@/utils/supabaseClient";
 
-const AllParts = ({ setParts }) => {
+const GetParts = ({ parts, setParts }) => {
 	const { session } = useSession();
 	const [loading, setLoading] = useState(true);
 
@@ -40,4 +42,4 @@ const AllParts = ({ setParts }) => {
 	);
 };
 
-export default AllParts;
+export default GetParts;
