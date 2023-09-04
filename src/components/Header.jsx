@@ -4,11 +4,11 @@ import {
   useUser,
   UserButton,
   SignInButton,
-  SignUpButton,
 } from '@clerk/nextjs'
 import { Dialog } from '@headlessui/react'
 import { BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Bars3Icon } from '@heroicons/react/20/solid'
+import Image from 'next/image'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -33,10 +33,12 @@ const Header = () => {
             <span className="sr-only">Open main menu</span>
             <Bars3Icon className="h-5 w-5 text-gray-900" aria-hidden="true" />
           </button>
-          <img
-            className="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+          <Image
+            className=""
+            src="/as-black.png"
+            width={60}
+            height={60}
+            alt="Autospec 4x4"
           />
         </div>
         <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
