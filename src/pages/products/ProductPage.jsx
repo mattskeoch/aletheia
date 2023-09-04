@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useSession } from '@clerk/nextjs'
 import supabaseClient from '@/utils/supabaseClient'
 import { Container } from '@/components/Container'
+import CompatibilityChecker from '@/components/CompatibilityChecker'
 
 const ProductPage = () => {
   const router = useRouter()
@@ -47,6 +48,8 @@ const ProductPage = () => {
             <h1 className="mx-auto mt-8 max-w-3xl text-xl font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
               {product?.title}
             </h1>
+            {/* Pass product?.id as productId */}
+            <CompatibilityChecker productId={product?.product_id} />
           </Container>
           <Container>
             <main>
