@@ -18,13 +18,21 @@ const CompatibilityChecker = ({ productId }) => {
         })
 
         const supabase = await supabaseClient(supabaseAccessToken)
+        
         const { data } = await supabase
           .from('VehiclesProductsCompatibility')
-          .select('*')
+          .select(`
+            vehicle_id,
+            Vehicles:Vehicles (make, model, year)
+          `)
           .eq('product_id', productId)
 
-        const vehicleIds = data.map((compatibility) => compatibility.vehicle_id)
-        setCompatibleVehicles(vehicleIds)
+        const flattenedData = data.map((item) => ({
+          ...item.Vehicles,
+          vehicle_id: item.vehicle_id,
+        }))
+
+        setCompatibleVehicles(flattenedData)
       } catch (error) {
         console.error(error)
       } finally {
@@ -42,8 +50,8 @@ const CompatibilityChecker = ({ productId }) => {
         <div>Loading...</div>
       ) : (
         <ul>
-          {compatibleVehicles.map((vehicleId) => (
-            <li key={vehicleId}>{vehicleId}</li>
+          {compatibleVehicles.map((vehicle) => (
+            <li key={vehicle.vehicle_id}>{vehicle.make} {vehicle.model} {vehicle.year}</li>
           ))}
         </ul>
       )}
