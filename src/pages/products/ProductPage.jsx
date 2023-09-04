@@ -45,19 +45,16 @@ const ProductPage = () => {
       ) : (
         <>
           <Container>
+            <main>
             <h1 className="mx-auto mt-8 max-w-3xl text-xl font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
               {product?.title}
             </h1>
-            {/* Pass product?.id as productId */}
-            <CompatibilityChecker productId={product?.product_id} />
-          </Container>
-          <Container>
-            <main>
               <p>{product?.description}</p>
               <p>{product?.sku}</p>
               <p>{product?.vendor}</p>
               <p>{product?.price}</p>
               <p>{product?.cost_price}</p>
+              <CompatibilityChecker productId={product?.product_id} />
             </main>
           </Container>
         </>

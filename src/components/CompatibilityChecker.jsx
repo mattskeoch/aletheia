@@ -45,7 +45,7 @@ const CompatibilityChecker = ({ productId }) => {
 
   return (
     <div>
-      <h2>Compatible Vehicles:</h2>
+      <h2 className='mt-8 font-semibold '>Compatible Vehicles:</h2>
       {loading ? (
         <div>Loading...</div>
       ) : (
