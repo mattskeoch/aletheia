@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useSession } from '@clerk/nextjs'
 import supabaseClient from '@/utils/supabaseClient'
 import { Container } from '@/components/Container'
-import CompatibilityChecker from '@/components/CompatibilityChecker'
+import ProductCompatibility from '@/components/ProductCompatibility'
 
 const ProductPage = () => {
   const router = useRouter()
@@ -54,7 +54,7 @@ const ProductPage = () => {
               <p>{product?.vendor}</p>
               <p>{product?.price}</p>
               <p>{product?.cost_price}</p>
-              <CompatibilityChecker productId={product?.product_id} />
+              <ProductCompatibility productId={product?.product_id} />
             </main>
           </Container>
         </>

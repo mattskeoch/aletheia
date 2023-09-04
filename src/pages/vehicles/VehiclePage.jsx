@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useSession } from '@clerk/nextjs'
 import supabaseClient from '@/utils/supabaseClient'
 import { Container } from '@/components/Container'
+import VehicleCompatibility from '@/components/VehicleCompatibility';
 
 const VehiclePage = () => {
   const router = useRouter()
@@ -54,6 +55,7 @@ const VehiclePage = () => {
               <p>{vehicle?.modle}</p>
               <p>{vehicle?.year}</p>
               <p>{vehicle?.variant}</p>
+              <VehicleCompatibility vehicleId={vehicle.vehicle_id} />
             </main>
           </Container>
         </>
