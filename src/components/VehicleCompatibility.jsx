@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import supabaseClient from '@/utils/supabaseClient';
-import { useSession } from '@clerk/nextjs'
+import { useSession } from '@clerk/nextjs';
+import Link from 'next/link';
 
 const VehicleCompatibility = ({ vehicleId }) => {
     const [compatibleParts, setCompatibleParts] = useState([]);
@@ -21,7 +22,7 @@ const VehicleCompatibility = ({ vehicleId }) => {
           const { data } = await supabase
             .from('VehiclesProductsCompatibility')
             .select(`product_id,
-            Products:Products(title)`)
+            Products:Products(title, url_slug)`)
             .eq('vehicle_id', vehicleId);
   
             const flattenedData = data.map((item) => ({
@@ -48,7 +49,14 @@ const VehicleCompatibility = ({ vehicleId }) => {
         ) : (
           <ul>
             {compatibleParts.map((product) => (
-              <li key={product.product_id}>{product.title}</li>
+              <li key={product.product_id}>
+              <Link
+              className="text-sm font-medium leading-6 text-rose-600 hover:text-rose-800"
+              href={`/products/${product.url_slug}`}
+            >
+              {product.title}
+            </Link>
+            </li>
             ))}
           </ul>
         )}

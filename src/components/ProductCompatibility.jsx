@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-
 import { useSession } from '@clerk/nextjs'
 import supabaseClient from '@/utils/supabaseClient'
+import Link from 'next/link'
 
 const CompatibilityChecker = ({ productId }) => {
   const [compatibleVehicles, setCompatibleVehicles] = useState([])
@@ -23,7 +23,7 @@ const CompatibilityChecker = ({ productId }) => {
           .from('VehiclesProductsCompatibility')
           .select(`
             vehicle_id,
-            Vehicles:Vehicles (make, model, year)
+            Vehicles:Vehicles (make, model, year, url_slug)
           `)
           .eq('product_id', productId)
 
@@ -51,7 +51,15 @@ const CompatibilityChecker = ({ productId }) => {
       ) : (
         <ul>
           {compatibleVehicles.map((vehicle) => (
-            <li key={vehicle.vehicle_id}>{vehicle.make} {vehicle.model} {vehicle.year}</li>
+            <li key={vehicle.vehicle_id}>
+            
+            <Link
+              className="text-sm font-medium leading-6 text-rose-600 hover:text-rose-800"
+              href={`/vehicles/${vehicle.url_slug}`}
+            >
+              {vehicle.make} {vehicle.model} {vehicle.year}
+            </Link>
+            </li>
           ))}
         </ul>
       )}

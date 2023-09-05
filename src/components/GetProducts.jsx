@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { useSession } from '@clerk/nextjs'
 import supabaseClient from '@/utils/supabaseClient'
@@ -62,7 +62,7 @@ const GetProducts = () => {
               </h2>
               <a
                 href="/products/new"
-                className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="ml-auto flex items-center gap-x-1 rounded-md bg-rose-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
                 Add product

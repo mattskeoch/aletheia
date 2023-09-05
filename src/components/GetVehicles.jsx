@@ -43,10 +43,10 @@ const GetVehicles = () => {
       <ul className="space-y-16 py-16 xl:space-y-20">
         {vehicles.map((vehicle, index) => (
           <li key={index}>
-            {vehicle.make} {vehicle.model} {vehicle.year}{' '}
+            {vehicle.make} {vehicle.model} {vehicle.year}
             <span>{vehicle.variant}</span>
             <Link
-              className="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500"
+              className="text-sm font-medium leading-6 text-rose-600 hover:text-rose-800"
               href={`/vehicles/${vehicle.url_slug}`}
             >
               View
