@@ -1,5 +1,4 @@
-import { Fragment, useState } from 'react'
-import { useAuth, useUser } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
 import Container from '@/components/Container'
 
 export default function Home() {
@@ -23,7 +22,7 @@ export default function Home() {
             </div>
           </main>
         )}
-      </>{' '}
+      </>
     </Container>
   )
 }

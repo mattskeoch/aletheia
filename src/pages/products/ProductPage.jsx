@@ -46,9 +46,9 @@ const ProductPage = () => {
         <>
           <Container>
             <main>
-            <h1 className="mx-auto mt-8 max-w-3xl text-xl font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
-              {product?.title}
-            </h1>
+              <h1 className="mx-auto mt-8 max-w-3xl text-xl font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
+                {product?.title}
+              </h1>
               <p>{product?.description}</p>
               <p>{product?.sku}</p>
               <p>{product?.vendor}</p>

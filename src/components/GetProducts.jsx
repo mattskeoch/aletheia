@@ -5,16 +5,8 @@ import supabaseClient from '@/utils/supabaseClient'
 import Link from 'next/link'
 import Container from '@/components/Container'
 import { PlusSmallIcon } from '@heroicons/react/20/solid'
-
-const statuses = {
-  Average: 'text-green-700 bg-green-50 ring-green-600/20',
-  High: 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  Low: 'text-red-700 bg-red-50 ring-red-600/10',
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import { columns } from '@/pages/products/columns'
+import { DataTable } from '@/pages/products/data-table'
 
 const GetProducts = () => {
   const { session } = useSession()
@@ -29,7 +21,9 @@ const GetProducts = () => {
           template: 'supabase',
         })
         const supabase = await supabaseClient(supabaseAccessToken)
-        const { data: products } = await supabase.from('Products').select('*')
+        const { data: products } = await supabase.from('Products').select('*', {
+          columns: ['*', 'product_url_slug'],
+        })
         setProducts(products)
       } catch (e) {
         alert(e)
@@ -49,16 +43,11 @@ const GetProducts = () => {
   return (
     <>
       <Container>
-        <h1 className="mx-auto mt-8 max-w-3xl text-xl font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
-          Products
-        </h1>
-      </Container>
-      <Container>
         <div className="space-y-16 py-16 xl:space-y-20">
           <div>
             <div className="mx-auto flex max-w-7xl px-4 sm:px-6 lg:px-8">
               <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
-                Recent products
+                All products
               </h2>
               <a
                 href="/products/new"
@@ -68,34 +57,8 @@ const GetProducts = () => {
                 Add product
               </a>
             </div>
-
-            <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-              {products.map((product, index) => (
-                <ul>
-                  <li key={index}>
-                    <Link href={`/products/${product.url_slug}`}>
-                      {product.title}
-                    </Link>
-                  </li>
-                  <li key={index}>
-                    <p>{product.description}</p>
-                  </li>
-                  <li key={index}> {product.sku}</li>
-                  <li key={index}> Vendor: {product.vendor}</li>
-                  <li key={index}>Price: ${product.price}</li>
-                  <li key={index}> Cost Price: ${product.cost_price}</li>
-
-                  <li key={index}>
-                    <Link
-                      className="text-sm font-medium leading-6 text-rose-600 hover:text-rose-800"
-                      href={`/products/${product.url_slug}`}
-                    >
-                      View
-                      <span className="hidden sm:inline"> product</span>
-                    </Link>
-                  </li>
-                </ul>
-              ))}
+            <div className="container mx-auto py-10">
+              <DataTable columns={columns} data={products} />
             </div>
           </div>
         </div>
