@@ -2,11 +2,12 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useSession } from '@clerk/nextjs'
 import supabaseClient from '@/utils/supabaseClient'
-import Link from 'next/link'
-import Container from '@/components/Container'
 import { PlusSmallIcon } from '@heroicons/react/20/solid'
 import { columns } from '@/pages/products/columns'
 import { DataTable } from '@/pages/products/data-table'
+
+import Link from 'next/link'
+import Container from '@/components/Container'
 
 const GetProducts = () => {
   const { session } = useSession()
@@ -45,7 +46,7 @@ const GetProducts = () => {
       <Container>
         <div className="space-y-16 py-16 xl:space-y-20">
           <div>
-            <div className="mx-auto flex max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto flex max-w-7xl ">
               <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">
                 All products
               </h2>
@@ -57,7 +58,7 @@ const GetProducts = () => {
                 Add product
               </a>
             </div>
-            <div className="container mx-auto py-10">
+            <div className="mx-auto py-10">
               <DataTable columns={columns} data={products} />
             </div>
           </div>

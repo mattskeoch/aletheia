@@ -9,17 +9,43 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from "@/components/ui/checkbox"
 
 import {
   EllipsisHorizontalIcon,
-  ChevronUpDownIcon,
 } from '@heroicons/react/24/solid'
+
+import {
+  ArrowSmallDownIcon,
+  ArrowSmallUpIcon,
+  ChevronUpDownIcon,
+  EyeSlashIcon,
+} from '@heroicons/react/24/outline'
+
+
 import Link from 'next/link'
 
 export const columns = [
   {
-    accessorKey: 'product_id',
-    header: 'ID',
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+        className="translate-y-[2px]"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+        className="translate-y-[2px]"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: 'sku',
@@ -27,8 +53,8 @@ export const columns = [
   },
   {
     accessorKey: 'url_slug',
-    header: 'SLUG',
-    show: false,
+    header: '',
+    cell:'',
   },
   {
     accessorKey: 'title',
@@ -52,22 +78,83 @@ export const columns = [
   },
   {
     accessorKey: 'vendor',
-    header: 'Vendor',
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Vendor
-          <ChevronUpDownIcon className="ml-2 h-4 w-4" />
-        </Button>
+        <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-ml-3 h-8 data-[state=open]:bg-accent"
+          >
+            <span>Vendor</span>
+            {column.getIsSorted() === "desc" ? (
+              <ArrowSmallDownIcon className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === "asc" ? (
+              <ArrowSmallUpIcon className="ml-2 h-4 w-4" />
+            ) : (
+              <ChevronUpDownIcon className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+            <ArrowSmallUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Asc
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+            <ArrowSmallDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Desc
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+            <EyeSlashIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Hide
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       )
     },
   },
   {
     accessorKey: 'price',
-    header: () => <div className="text-right">Price</div>,
+    header: ({ column }) => {
+      return (
+        <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-mr-2 h-8 data-[state=open]:bg-accent"
+          >
+            <span>Price</span>
+            {column.getIsSorted() === "desc" ? (
+              <ArrowSmallDownIcon className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === "asc" ? (
+              <ArrowSmallUpIcon className="ml-2 h-4 w-4" />
+            ) : (
+              <ChevronUpDownIcon className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+            <ArrowSmallUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Asc
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+            <ArrowSmallDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Desc
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+            <EyeSlashIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Hide
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      )
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('price'))
       const formatted = new Intl.NumberFormat('en-US', {
@@ -75,12 +162,48 @@ export const columns = [
         currency: 'AUD',
       }).format(amount)
 
-      return <div className="text-right">{formatted}</div>
+      return <div className="text-center">{formatted}</div>
     },
   },
   {
     accessorKey: 'cost_price',
-    header: () => <div className="text-right">Cost Price</div>,
+    header: ({ column }) => {
+      return (
+        <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="-mr-2 h-8 data-[state=open]:bg-accent"
+          >
+            <span>Cost</span>
+            {column.getIsSorted() === "desc" ? (
+              <ArrowSmallDownIcon className="ml-2 h-4 w-4" />
+            ) : column.getIsSorted() === "asc" ? (
+              <ArrowSmallUpIcon className="ml-2 h-4 w-4" />
+            ) : (
+              <ChevronUpDownIcon className="ml-2 h-4 w-4" />
+            )}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+            <ArrowSmallUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Asc
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+            <ArrowSmallDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Desc
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+            <EyeSlashIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Hide
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      )
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('cost_price'))
       const formatted = new Intl.NumberFormat('en-US', {
@@ -88,7 +211,7 @@ export const columns = [
         currency: 'AUD',
       }).format(amount)
 
-      return <div className="text-right">{formatted}</div>
+      return <div className="text-center">{formatted}</div>
     },
   },
   {

@@ -33,11 +33,14 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/20/solid'
+import { DataTablePagination } from '@/pages/products/data-table-pagination'
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = React.useState([])
   const [columnFilters, setColumnFilters] = React.useState([])
   const [columnVisibility, setColumnVisibility] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState({})
+
 
   const table = useReactTable({
     data,
@@ -49,10 +52,12 @@ export function DataTable({ columns, data }) {
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
+      rowSelection,
     },
   })
 
@@ -173,6 +178,7 @@ export function DataTable({ columns, data }) {
           Next
         </Button>
       </div>
+      <DataTablePagination table={table} />
     </div>
   )
 }
